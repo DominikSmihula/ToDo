@@ -66,7 +66,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import { useVuelidate } from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import ApiService from "../connectors/ApiService";
@@ -118,10 +118,18 @@ export default defineComponent({
     ...mapGetters(["openedItem"]),
   },
   methods: {
+    ...mapMutations(["storeFetchLists"]),
     storeNewList() {
-      return ApiService().post("http://localhost:3000/toDoLists", {
-        toDolistName: this.formData.listName,
-      });
+      ApiService()
+        .post("http://localhost:3000/toDoLists", {
+          toDolistName: this.formData.listName,
+        })
+        .then((result) => {
+          this.storeFetchLists();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     closeDialog() {
       this.$emit("closeDialog");
@@ -138,6 +146,7 @@ export default defineComponent({
           listId: this.openedItem,
           status: "backlog",
         })
+        .then(() => this.storeFetchLists())
         .catch((err) => {
           console.log(err);
         });
@@ -151,7 +160,8 @@ export default defineComponent({
           listId: this.item.listId,
           status: this.formData.status,
         })
-        .then((result) => {
+        .then(() => {
+          this.storeFetchLists();
           this.showSnackbar();
         })
         .catch((err) => {
@@ -172,7 +182,13 @@ export default defineComponent({
       }
     },
     clear() {
-      this.v$.value.$reset();
+      return (this.formData = {
+        listName: "",
+        itemName: "",
+        description: "",
+        deadlineTermin: "",
+        status: "",
+      });
     },
   },
 });

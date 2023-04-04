@@ -89,7 +89,7 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapGetters(["filteredItem", "filteredCategory"]),
+    ...mapGetters(["filteredItem", "filteredCategory", "fetchLists"]),
   },
   methods: {
     ...mapMutations([
@@ -104,6 +104,7 @@ export default defineComponent({
     //   console.log(this.items);
     // },
     getFilteredItems(): IItem[] {
+      console.log(this.items);
       if (this.filteredCategory) {
         console.log(this.filteredCategory);
         return this.items.filter(
@@ -123,12 +124,14 @@ export default defineComponent({
       }
     },
 
-    getLitsItems(): void {
-      ApiService()
-        .get(`http://localhost:3000/toDoItems/?listId=${this.id}`)
+    async getLitsItems(): Promise<void> {
+      await ApiService()
+        .get(`http://localhost:3000/toDoItems?listId=${this.id}`)
         .then((result) => {
+          console.log("TUSOM ");
           this.storeItems(result);
           this.items = result;
+          this.getFilteredItems()
         })
         .catch((err) => {
           console.log(err);
@@ -155,6 +158,11 @@ export default defineComponent({
         this.storeFilteredCategory("");
         this.storeFilteredItem("");
       }
+    },
+    fetchLists() {
+      this.getLitsItems();
+      this.storeFilteredCategory("");
+      this.storeFilteredItem("");
     },
   },
   mounted() {

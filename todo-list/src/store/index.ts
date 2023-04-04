@@ -7,16 +7,21 @@ export default new Vuex.Store({
     filteredCategory: "",
     items: [],
     openedList: "",
+    fetchLists: false
   },
   getters: {
     filteredItem: (state) => state.filteredItem,
     filteredCategory: (state) => state.filteredCategory,
     listItems: (state) => state.items,
     openedItem: (state) => state.openedList,
+    fetchLists: (state) => state.fetchLists
   },
   mutations: <MutationTree<any>>{
-    storeFilteredItem: (state, payload) => {
-      return state.filteredItem = payload
+    storeFilteredItem: (state) => {
+      return !state.filteredItem
+    },
+    storeFetchLists: (state, payload) => {
+      return state.fetchLists = payload
     },
     storeOpenedDIalog: (state, payload) => {
       return state.dialog = payload

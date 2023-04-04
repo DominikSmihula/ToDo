@@ -112,12 +112,24 @@ export default {
         this.storeFilteredCategory();
       }
     },
+    fetchLists() {
+      this.getLitsItems();
+    },
   },
   computed: {
-    ...mapGetters(["listItems", "filteredItem", "filteredCategory"]),
+    ...mapGetters([
+      "listItems",
+      "filteredItem",
+      "filteredCategory",
+      "fetchLists",
+    ]),
   },
+
   methods: {
     ...mapMutations(["storeFilteredCategory", "storeFilteredItem"]),
+    storedList() {
+      this.$emit("storedList");
+    },
     getLitsItems(): void {
       ApiService()
         .get("http://localhost:3000/toDoLists")
