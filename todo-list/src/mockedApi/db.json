@@ -1,0 +1,26 @@
+{
+  "toDoLists": [
+    {
+      "toDolistName": "Default list",
+      "id": 1232323432425
+    }
+  ],
+  "toDoItems": [
+    {
+      "title": "Test item",
+      "description": "description",
+      "deadline": "2023-04-04",
+      "listId": "1232323432425",
+      "status": "done",
+      "id": 1234
+    },
+    {
+      "title": "real item",
+      "description": "description",
+      "deadline": "2023-04-04",
+      "listId": "1232323432425",
+      "status": "in progress",
+      "id": 1235
+    }
+  ]
+}
