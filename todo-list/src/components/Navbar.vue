@@ -58,7 +58,7 @@
             $router.push({
               name: 'List',
               params: {
-                id: link.id,
+                listId: link.id,
               },
             })
           "

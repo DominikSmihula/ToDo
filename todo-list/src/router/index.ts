@@ -4,13 +4,13 @@ import ItemDetails from '../views/ItemDetails.vue'
 const routes = [
 
   {
-    path: "/todolist/:id",
+    path: "/todolist/:listId",
     name: "List",
     component: ToDoList,
     props: true,
   },
   {
-    path: "/itemdetails/:id",
+    path: "/todolist/:listId/itemdetails/:id",
     name: "ItemDetails",
     component: ItemDetails,
     props: true,

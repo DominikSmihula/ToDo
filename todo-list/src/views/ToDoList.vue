@@ -71,7 +71,7 @@ import { IItem } from "../interfaces/Item.interface";
 
 export default defineComponent({
   props: {
-    id: {
+    listId: {
       readonly: true,
       type: String,
     },
@@ -126,7 +126,7 @@ export default defineComponent({
 
     async getLitsItems(): Promise<void> {
       await ApiService()
-        .get(`http://localhost:3000/toDoItems?listId=${this.id}`)
+        .get(`http://localhost:3000/toDoItems?listId=${this.listId}`)
         .then((result) => {
           console.log("TUSOM ");
           this.storeItems(result);
@@ -166,7 +166,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.storeOpenedItem(this.id);
+    this.storeOpenedItem(this.listId);
     this.getLitsItems();
   },
 });
